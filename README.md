@@ -1,4 +1,4 @@
-# furry_game
+# Furry Game
 
 Workshop within Coder's Lab JavaScript course.
 

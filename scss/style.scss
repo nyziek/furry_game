@@ -24,7 +24,6 @@ section#score {
     height: 64px;
 }
 
-
 section#score div {
     width: 10em;
     height: 3em;
@@ -37,18 +36,34 @@ section#score div {
     margin: 1em auto;
 }
 
-
-
-
 .furry {
     background-image: url('../images/furry.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 .coin {
     background-image: url('../images/coin.png');
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+section#start div {
+    width: 10em;
+    height: 2.2em;
+    text-align: center;
+    padding: 0.5em;
+    background-color: rgba(160,255,160, 0.75);
+    border: 1px solid lightgray;
+    border-radius: 1px;
+    box-shadow: 1px 1px 5px 1px lightgray;
+    margin: 1em auto;
+    cursor: pointer;
+}
+
+section#start div:hover {
+    background-color: rgba(185,184,255, 0.75);
+    box-shadow: 0 0 5px 0 lightgray;
 }
 
 section#over {

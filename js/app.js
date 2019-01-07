@@ -12,6 +12,9 @@ function Coin() {
 }
 
 function Game() {
+
+    var self = this;
+
     this.board = document.querySelectorAll("section#board div");
     this.furry = new Furry();
     this.coin = new Coin();
@@ -29,12 +32,13 @@ function Game() {
         this.board[ this.index(this.coin.x,this.coin.y) ].classList.add('coin');
     };
 
+    this.interval = undefined;
+
     this.startGame = function() {
 
-        setInterval(this.idSetInterval, 1000);
-    };
+        interval = setInterval(this.idSetInterval, 250);
 
-    var self = this;
+    };
 
     this.idSetInterval = function() {
         self.moveFurry();
@@ -45,24 +49,28 @@ function Game() {
         if(this.furry.direction === "right") {
 
             this.furry.x++;
+            self.gameOver();
             self.showFurry();
             self.hideVisibleFurry();
 
         } else if (this.furry.direction === "left") {
 
             this.furry.x--;
+            self.gameOver();
             self.hideVisibleFurry();
             self.showFurry();
 
         } else if (this.furry.direction === "up") {
 
             this.furry.y--;
+            self.gameOver();
             self.hideVisibleFurry();
             self.showFurry();
 
         } else if (this.furry.direction === "down") {
 
             this.furry.y++;
+            self.gameOver();
             self.showFurry();
             self.hideVisibleFurry();
         }
@@ -93,12 +101,32 @@ function Game() {
         }
     };
 
-    this.checkCoinCollision = function () {
+    this.checkCoinCollision = function() {
 
         if(self.furry.x === self.coin.x && self.furry.y === self.coin.y) {
-            console.log("Kolizja!");
+
+            var visibleCoin = document.querySelector(".coin");
+            visibleCoin.classList.remove("coin");
+
+            this.score++;
+
+            var scoreDisplay = document.querySelector("#score strong");
+            scoreDisplay.innerText = self.score;
+
+            this.coin = new Coin();
+
+            self.showCoin();
+
         }
-    }
+    };
+
+    this.gameOver = function() {
+        if(this.furry.x < 0 || this.furry.x > 9 || this.furry.y < 0 || this.furry.y > 9) {
+            console.log("Oooops!");
+            clearInterval(interval);
+            self.hideVisibleFurry();
+        }
+    };
 }
 
 var game = new Game();

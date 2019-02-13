@@ -1,4 +1,5 @@
 var startButton = document.querySelector("#start");
+var restartButton = document.querySelector("#again");
 
 function Furry() {
     this.x = 0;
@@ -33,10 +34,11 @@ function Game() {
     };
 
     this.interval = undefined;
+    this.intervalTime = 300;
 
     this.startGame = function() {
 
-        interval = setInterval(this.idSetInterval, 250);
+        interval = setInterval(this.idSetInterval, this.intervalTime);
 
     };
 
@@ -50,29 +52,45 @@ function Game() {
 
             this.furry.x++;
             self.gameOver();
-            self.showFurry();
-            self.hideVisibleFurry();
+            if(this.furry.x <= 9) {
+                self.showFurry();
+                self.hideVisibleFurry();
+                clearInterval(interval);
+                interval = setInterval(this.idSetInterval, this.intervalTime);
+            }
 
         } else if (this.furry.direction === "left") {
 
             this.furry.x--;
             self.gameOver();
-            self.hideVisibleFurry();
-            self.showFurry();
+            if(this.furry.x >= 0) {
+                self.hideVisibleFurry();
+                self.showFurry();
+                clearInterval(interval);
+                interval = setInterval(this.idSetInterval, this.intervalTime);
+            }
 
         } else if (this.furry.direction === "up") {
 
             this.furry.y--;
             self.gameOver();
-            self.hideVisibleFurry();
-            self.showFurry();
+            if(this.furry.y >= 0) {
+                self.hideVisibleFurry();
+                self.showFurry();
+                clearInterval(interval);
+                interval = setInterval(this.idSetInterval, this.intervalTime);
+            }
 
         } else if (this.furry.direction === "down") {
 
             this.furry.y++;
             self.gameOver();
-            self.showFurry();
-            self.hideVisibleFurry();
+            if(this.furry.y <= 9) {
+                self.showFurry();
+                self.hideVisibleFurry();
+                clearInterval(interval);
+                interval = setInterval(this.idSetInterval, this.intervalTime);
+            }
         }
 
         self.checkCoinCollision();
@@ -113,10 +131,16 @@ function Game() {
             var scoreDisplay = document.querySelector("#score strong");
             scoreDisplay.innerText = self.score;
 
+            var sound = new Audio("../sounds/coin.wav");
+            sound.play();
+
             this.coin = new Coin();
 
             self.showCoin();
 
+            if(this.intervalTime >= 100) {
+                this.intervalTime = this.intervalTime - 1;
+            }
         }
     };
 
@@ -125,6 +149,13 @@ function Game() {
             console.log("Oooops!");
             clearInterval(interval);
             self.hideVisibleFurry();
+
+            var gameOverScreen = document.querySelector("#over");
+            var sound = new Audio("../sounds/gameover.wav");
+
+            gameOverScreen.classList.remove("invisible");
+            sound.play();
+
         }
     };
 }
@@ -142,6 +173,12 @@ document.addEventListener("keydown", function(event) {
 
     game.turnFurry(event);
 });
+
+restartButton.addEventListener("click", function() {
+
+    location.reload();
+});
+
 
 
 

@@ -163,14 +163,15 @@ function Game() {
 
 var game = new Game();
 
-speedChoose.addEventListener("click", function() {
-    console.log(event.target);
+speedChoose.addEventListener("click", function(event) {
+
+    event = event || window.event;
 
     var speedChoiceScreen = document.querySelector("#speed");
 
     speedChoiceScreen.classList.add("invisible");
 
-    var button = event.target;
+    var button = event.target || event.srcElement;
 
     if(button.classList.contains("slow")) {
         speed = 1000;
@@ -194,9 +195,3 @@ restartButton.addEventListener("click", function() {
 
     location.reload();
 });
-
-
-
-
-
-

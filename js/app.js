@@ -1,5 +1,7 @@
-var startButton = document.querySelector("#start");
+var speedChoose = document.querySelector("#speed");
 var restartButton = document.querySelector("#again");
+var speed = undefined;
+
 
 function Furry() {
     this.x = 0;
@@ -33,10 +35,10 @@ function Game() {
         this.board[ this.index(this.coin.x,this.coin.y) ].classList.add('coin');
     };
 
-    this.interval = undefined;
-    this.intervalTime = 300;
-
     this.startGame = function() {
+
+        this.interval = undefined;
+        this.intervalTime = speed;
 
         interval = setInterval(this.idSetInterval, this.intervalTime);
 
@@ -131,7 +133,7 @@ function Game() {
             var scoreDisplay = document.querySelector("#score strong");
             scoreDisplay.innerText = self.score;
 
-            var sound = new Audio("../sounds/coin.wav");
+            var sound = new Audio("sounds/coin.wav");
             sound.play();
 
             this.coin = new Coin();
@@ -151,18 +153,32 @@ function Game() {
             self.hideVisibleFurry();
 
             var gameOverScreen = document.querySelector("#over");
-            var sound = new Audio("../sounds/gameover.wav");
+            var sound = new Audio("sounds/gameover.wav");
 
             gameOverScreen.classList.remove("invisible");
             sound.play();
-
         }
     };
 }
 
 var game = new Game();
 
-startButton.addEventListener("click", function() {
+speedChoose.addEventListener("click", function() {
+    console.log(event.target);
+
+    var speedChoiceScreen = document.querySelector("#speed");
+
+    speedChoiceScreen.classList.add("invisible");
+
+    var button = event.target;
+
+    if(button.classList.contains("slow")) {
+        speed = 1000;
+    } else if(button.classList.contains("medium")) {
+        speed = 500;
+    } else {
+        speed = 250;
+    }
 
     game.showFurry();
     game.showCoin();

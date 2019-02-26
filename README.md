@@ -8,6 +8,7 @@ The aim of the game is to collect as many coins as possible using keyboard arrow
 
 The game was later modified by me by:
 * adding possibility to choose Furry's speed
+* adding speed change after each collected coin
 * adding sounds
 * improving styling
 
